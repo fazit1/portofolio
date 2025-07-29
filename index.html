@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio - Landing Page</title>
+    <style>
+        /* Tetap pertahankan CSS Anda */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+            color: #fff; /* Tambahkan warna teks default */
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 15px 0;
+            transition: all 0.3s ease;
+        }
+
+        nav.scrolled {
+            background: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #fff;
+            text-decoration: none;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+        }
+
+        .nav-links li {
+            margin-left: 30px;
+        }
+
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1.1rem;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #a7d9ff;
+        }
+
+        /* Hero Section */
+        .hero {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+            padding-top: 80px; /* Offset for fixed nav */
+        }
+
+        .hero-content {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInHero 1s forwards;
+            animation-delay: 0.5s;
+        }
+
+        @keyframes fadeInHero {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero h1 {
+            font-size: 4.5rem;
+            margin-bottom: 20px;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.4);
+        }
+
+        .hero p {
+            font-size: 1.8rem;
+            margin-bottom: 40px;
+            font-weight: 300;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+        }
+
+        .btn {
+            display: inline-block;
+            background: linear-gradient(45deg, #00c6ff, #0072ff);
+            color: #fff;
+            padding: 15px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-size: 1.2rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 114, 255, 0.4);
+        }
+
+        .btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 114, 255, 0.6);
+        }
+
+        /* Sections */
+        section {
+            padding: 80px 0;
+            background: rgba(255, 255, 255, 0.05);
+            margin-bottom: 40px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        section h2 {
+            text-align: center;
+            font-size: 3rem;
+            margin-bottom: 60px;
+            color: #fff;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        /* About Section */
+        .about-content {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 40px;
+        }
+
+        .about-text {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .about-text h3 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: #fff;
+        }
+
+        .about-text p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #eee;
+        }
+
+        .about-image {
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            margin: 0 auto 30px;
+            display: block;
+            object-fit: cover;
+            object-position: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            backdrop-filter: blur(10px);
+            /* Ensure perfect circle */
+            aspect-ratio: 1 / 1;
+            overflow: hidden;
+        }
+
+        .about-image img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 20px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .about-image img:hover {
+            transform: scale(1.02);
+        }
+
+        /* Skills Section */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .skill-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease, background 0.3s ease;
+        }
+
+        .skill-card:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .skill-card .icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            color: #ffdd44; /* Icon color */
+        }
+
+        .skill-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            color: #fff;
+        }
+
+        .skill-bar-container {
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            height: 10px;
+            margin-top: 15px;
+            overflow: hidden;
+        }
+
+        .skill-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #00c6ff, #0072ff);
+            border-radius: 10px;
+            width: 0%; /* Initial width for animation */
+            transition: width 1s ease-out;
+        }
+
+        .skill-card p {
+            font-size: 1rem;
+            color: #ccc;
+            margin-top: 15px;
+        }
+
+        /* Experience and Projects Section */
+        .timeline {
+            position: relative;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 6px;
+            background: #fff;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -3px;
+            border-radius: 5px;
+        }
+
+        .timeline-item {
+            padding: 10px 40px;
+            position: relative;
+            background: inherit;
+            width: 50%;
+        }
+
+        .timeline-item.left {
+            left: 0;
+        }
+
+        .timeline-item.right {
+            left: 50%;
+        }
+
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            right: -17px;
+            background-color: #fff;
+            border: 4px solid #00c6ff;
+            top: 15px;
+            border-radius: 50%;
+            z-index: 1;
+        }
+
+        .timeline-item.right::after {
+            left: -17px;
+        }
+
+        .timeline-item .content {
+            padding: 20px 30px;
+            background: rgba(255, 255, 255, 0.1);
+            position: relative;
+            border-radius: 10px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .timeline-item .content:hover {
+            transform: translateY(-5px);
+        }
+
+        .timeline-item.left .content {
+            margin-left: 0;
+        }
+
+        .timeline-item.right .content {
+            margin-left: 50px;
+        }
+
+        .timeline-item h3 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            color: #fff;
+        }
+
+        .timeline-item p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: #eee;
+        }
+
+        .timeline-item ul {
+            list-style: none;
+            margin-top: 10px;
+            padding-left: 20px;
+        }
+
+        .timeline-item ul li {
+            position: relative;
+            margin-bottom: 5px;
+            font-size: 1rem;
+            color: #eee;
+        }
+
+        .timeline-item ul li::before {
+            content: '•';
+            position: absolute;
+            left: -15px;
+            color: #00c6ff;
+            font-weight: bold;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 40px 0;
+            margin-top: 50px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #fff;
+            font-size: 1rem;
+        }
+
+        footer p {
+            margin-bottom: 10px;
+        }
+
+        .social-links a {
+            color: #fff;
+            font-size: 1.5rem;
+            margin: 0 10px;
+            transition: color 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: #00c6ff;
+        }
+
+        /* Responsive adjustments */
+        @media screen and (max-width: 768px) {
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                background: rgba(255, 255, 255, 0.15);
+                position: absolute;
+                top: 70px;
+                left: 0;
+                padding: 20px 0;
+                border-radius: 0 0 10px 10px;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .nav-links li {
+                margin: 10px 0;
+                text-align: center;
+            }
+
+            .hamburger {
+                display: block;
+                font-size: 2rem;
+                color: #fff;
+                cursor: pointer;
+            }
+
+            .hero h1 {
+                font-size: 3rem;
+            }
+
+            .hero p {
+                font-size: 1.2rem;
+            }
+
+            section h2 {
+                font-size: 2.5rem;
+            }
+
+            .timeline::after {
+                left: 31px;
+            }
+
+            .timeline-item {
+                width: 100%;
+                padding-left: 70px;
+                padding-right: 25px;
+            }
+
+            .timeline-item.right {
+                left: 0%;
+            }
+
+            .timeline-item.left::after,
+            .timeline-item.right::after {
+                left: 15px;
+            }
+
+            .timeline-item .content {
+                margin-left: 0;
+            }
+        }
+
+        /* Hamburger Menu Icon */
+        .hamburger {
+            display: none; /* Hidden by default for larger screens */
+            cursor: pointer;
+            font-size: 2rem;
+            color: #fff;
+        }
+        @media screen and (max-width: 768px) {
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                background: rgba(255, 255, 255, 0.15);
+                position: absolute;
+                top: 70px;
+                left: 0;
+                padding: 20px 0;
+                border-radius: 0 0 10px 10px;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .nav-links li {
+                margin: 10px 0;
+                text-align: center;
+            }
+
+            .hamburger {
+                display: block;
+            }
+
+            .header h1 {
+                font-size: 2.5rem;
+            }
+        }
+        .project-image-container {
+            margin-top: 15px; /* Memberi sedikit ruang di atas gambar */
+            margin-bottom: 15px; /* Memberi sedikit ruang di bawah gambar */
+            border-radius: 10px; /* Sudut membulat untuk kontainer */
+            overflow: hidden; /* Memastikan gambar tetap di dalam batas kontainer yang membulat */
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Bayangan untuk efek kedalaman */
+            display: flex; /* Menggunakan flexbox untuk mengatur gambar */
+            justify-content: center; /* Pusatkan gambar secara horizontal */
+            align-items: center; /* Pusatkan gambar secara vertikal */
+            background-color: rgba(0, 0, 0, 0.1); /* Latar belakang samar untuk kontainer */
+        }
+
+        .project-image-container img {
+            max-width: 100%; /* Memastikan gambar tidak melebihi lebar kontainer */
+            height: auto; /* Mempertahankan rasio aspek gambar */
+            display: block; /* Menghilangkan spasi ekstra di bawah gambar */
+            border-radius: 8px; /* Sudut membulat untuk gambar itu sendiri, sedikit lebih kecil dari kontainer */
+            transition: transform 0.3s ease; /* Transisi halus saat hover */
+        }
+
+        .project-image-container img:hover {
+            transform: scale(1.02); /* Sedikit membesar saat dihover */
+        }
+    </style>
+</head>
+<body>
+    <nav id="navbar">
+        <div class="container">
+            <a href="#" class="logo">MyPortfolio</a>
+            <ul class="nav-links">
+                <li><a href="index.html">Portfolio</a></li>
+                <li><a href="news.html">News</a></li>
+                <li><a href="profile.html">Contact</a></li>
+            </ul>
+            <div class="hamburger" id="hamburger-menu">&#9776;</div>
+        </div>
+    </nav>
+
+    <main>
+        <section class="hero">
+            <div class="hero-content">
+                <h1 id="hero-name">Loading...</h1>
+                <p id="hero-title">Loading job title...</p>
+                <a href="#about" class="btn">Learn More</a>
+            </div>
+        </section>
+
+        <section id="about" class="section-hidden">
+            <div class="container">
+                <h2>About Me</h2>
+                <div class="about-content">
+                    <div class="about-text">
+                        <h3 id="about-heading">Hello There!</h3>
+                        <p id="about-description">Loading about me description...</p>
+                    </div>
+                    <div class="about-image">
+                        <img src="aziz.png" alt="Your Photo">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="skills" class="section-hidden">
+            <div class="container">
+                <h2>My Skills</h2>
+                <div class="skills-grid" id="skills-container">
+                    <div class="skill-card">
+                        <div class="icon">💻</div>
+                        <h3>Web Development</h3>
+                        <p>Loading...</p>
+                        <div class="skill-bar-container">
+                            <div class="skill-bar" style="width: 70%;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="experience" class="section-hidden">
+            <div class="container">
+                <h2>My Study</h2>
+                <div class="timeline" id="experience-timeline">
+                    <div class="timeline-item left">
+                        <div class="content">
+                            <h3>Loading...</h3>
+                            <p>Loading...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="projects" class="section-hidden">
+            <div class="container">
+                <h2>My Projects</h2>
+                <div class="timeline" id="projects-timeline">
+                    <div class="timeline-item right">
+                        <div class="content">
+                            <h3>Loading...</h3>
+                            <p>Loading...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="organizations" class="section-hidden">
+            <div class="container">
+                <h2>Organizational Activities</h2>
+                <div class="timeline" id="organizations-timeline">
+                    <div class="timeline-item left">
+                        <div class="content">
+                            <h3>Loading...</h3>
+                            <p>Loading...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; <span id="current-year"></span> MyPortfolio. All rights reserved.</p>
+            <div class="social-links">
+                <a href="https://instagram.com/azizfaalih" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="https://linkedin.com/in/yourusername" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                <a href="https://github.com/yourusername" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://kit.fontawesome.com/your-font-awesome-kit.js" crossorigin="anonymous"></script> <script>
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+
+        const API_BASE_URL = 'http://localhost:3000/api'; // Sesuaikan dengan port backend Anda
+
+        // Function to fetch and render portfolio data
+        async function fetchAndRenderPortfolio() {
+            try {
+                const response = await fetch(`${API_BASE_URL}/portfolio`);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const data = await response.json();
+                console.log('Fetched portfolio data:', data);
+
+                // Personal Info
+                document.getElementById('hero-name').textContent = data.personalInfo.name || 'Your Name';
+                document.getElementById('hero-title').textContent = data.personalInfo.title || 'Your Job Title';
+                document.getElementById('about-heading').textContent = `Hello, I'm ${data.personalInfo.name || 'Your Name'}!`;
+                document.getElementById('about-description').textContent = data.personalInfo.description || 'A passionate Software Developer with a knack for creating beautiful and functional web applications.'; // Tambahkan deskripsi about jika ada di DB
+
+                // Skills
+                const skillsContainer = document.getElementById('skills-container');
+                skillsContainer.innerHTML = ''; // Clear existing skills
+                data.skills.forEach(skill => {
+                    const skillCard = `
+                        <div class="skill-card">
+                            <div class="icon">${skill.icon || '🛠️'}</div>
+                            <h3>${skill.name}</h3>
+                            <p>${skill.description || ''}</p>
+                            <div class="skill-bar-container">
+                                <div class="skill-bar" style="width: ${skill.level || 0}%;"></div>
+                            </div>
+                        </div>
+                    `;
+                    skillsContainer.insertAdjacentHTML('beforeend', skillCard);
+                });
+
+                // Experiences
+                const experienceTimeline = document.getElementById('experience-timeline');
+                experienceTimeline.innerHTML = ''; // Clear existing experiences
+                data.experiences.forEach((exp, index) => {
+                    const alignmentClass = index % 2 === 0 ? 'left' : 'right';
+                    const descriptionItems = exp.description ? exp.description.split(';').map(item => `<li>${item.trim()}</li>`).join('') : '';
+                    const experienceItem = `
+                        <div class="timeline-item ${alignmentClass}">
+                            <div class="content">
+                                <h3>${exp.period} - ${exp.title}</h3>
+                                <p><strong>${exp.company}</strong></p>
+                                <ul>${descriptionItems}</ul>
+                            </div>
+                        </div>
+                    `;
+                    experienceTimeline.insertAdjacentHTML('beforeend', experienceItem);
+                });
+
+                // Projects
+                const projectsTimeline = document.getElementById('projects-timeline');
+                projectsTimeline.innerHTML = ''; // Clear existing projects
+                data.projects.forEach((proj, index) => {
+                    const alignmentClass = index % 2 !== 0 ? 'left' : 'right'; // Balikkan untuk variasi
+                    const projectItem = `
+                        <div class="timeline-item ${alignmentClass}">
+                            <div class="content">
+                                <h3>${proj.year} - ${proj.title}</h3>
+                                ${proj.imageUrl ? `
+                                    <div class="project-image-container">
+                                        <img src="${proj.imageUrl}" alt="${proj.title}">
+                                    </div>
+                                ` : ''}
+                                <p>${proj.description}</p>
+                            </div>
+                        </div>
+                    `;
+                    projectsTimeline.insertAdjacentHTML('beforeend', projectItem);
+                });
+
+                // Organizations
+                const organizationsTimeline = document.getElementById('organizations-timeline');
+                organizationsTimeline.innerHTML = ''; // Clear existing organizations
+                data.organizations.forEach((org, index) => {
+                    const alignmentClass = index % 2 === 0 ? 'left' : 'right';
+                    const descriptionItems = org.description ? org.description.split(';').map(item => `<li>${item.trim()}</li>`).join('') : '';
+                    const organizationItem = `
+                        <div class="timeline-item ${alignmentClass}">
+                            <div class="content">
+                                <h3>${org.period} - ${org.title}</h3>
+                                <ul>${descriptionItems}</ul>
+                            </div>
+                        </div>
+                    `;
+                    organizationsTimeline.insertAdjacentHTML('beforeend', organizationItem);
+                });
+
+            } catch (error) {
+                console.error('Failed to fetch portfolio data:', error);
+                // Tampilkan pesan error di UI jika perlu
+                document.getElementById('hero-name').textContent = 'Error loading data';
+                document.getElementById('hero-title').textContent = 'Please check console for details.';
+            }
+        }
+
+        // Initial fetch when the DOM is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            fetchAndRenderPortfolio();
+
+            // Navbar scroll effect
+            const navbar = document.getElementById('navbar');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    navbar.classList.add('scrolled');
+                } else {
+                    navbar.classList.remove('scrolled');
+                }
+            });
+
+            // Intersection Observer for section animations
+            const sections = document.querySelectorAll('section');
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.1
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target); // Stop observing once visible
+                    }
+                });
+            }, observerOptions);
+
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+
+            // Hamburger menu toggle
+            const hamburgerMenu = document.getElementById('hamburger-menu');
+            const navLinks = document.querySelector('.nav-links');
+
+            hamburgerMenu.addEventListener('click', () => {
+                navLinks.classList.toggle('active');
+            });
+        });
+    </script>
+</body>
+</html>

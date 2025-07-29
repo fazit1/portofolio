@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tech News - Berita Informatika Terkini</title>
+    <style>
+        /* Tetap pertahankan CSS Anda */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #fff;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Navigation (duplicate from index.html, consider a shared CSS file or component) */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 15px 0;
+            transition: all 0.3s ease;
+        }
+
+        nav.scrolled {
+            background: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #fff;
+            text-decoration: none;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+        }
+
+        .nav-links li {
+            margin-left: 30px;
+        }
+
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1.1rem;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #a7d9ff;
+        }
+        .hamburger {
+            display: none; /* Hidden by default for larger screens */
+            cursor: pointer;
+            font-size: 2rem;
+            color: #fff;
+        }
+        /* End Navigation */
+
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+            padding: 40px 0;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 100px; /* Adjust for fixed nav */
+        }
+
+        .header h1 {
+            font-size: 3.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.8;
+        }
+
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .news-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .news-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .news-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .news-content {
+            padding: 25px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .news-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.9rem;
+            color: #ccc;
+            margin-bottom: 15px;
+        }
+
+        .news-meta .category {
+            background: rgba(0, 114, 255, 0.7);
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-weight: bold;
+            color: #fff;
+        }
+
+        .news-meta .badge {
+            background: linear-gradient(45deg, #ff6b6b, #ee4e4e);
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-weight: bold;
+            color: #fff;
+        }
+
+        .news-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            color: #fff;
+            line-height: 1.4;
+        }
+
+        .news-card p {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #eee;
+            flex-grow: 1;
+        }
+
+        .news-card .read-more {
+            display: inline-block;
+            margin-top: 20px;
+            color: #00c6ff;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .news-card .read-more:hover {
+            color: #a7d9ff;
+        }
+
+        .trending-news {
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 15px;
+            padding: 30px;
+            margin-top: 50px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .trending-news h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            color: #ffdd44;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+        }
+
+        .trending-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .trending-list li {
+            background: rgba(255, 255, 255, 0.05);
+            margin-bottom: 15px;
+            padding: 20px;
+            border-radius: 10px;
+            transition: background 0.3s ease;
+        }
+
+        .trending-list li:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .trending-list li a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1.1rem;
+            display: block;
+        }
+
+        .trending-list li p {
+            font-size: 0.9rem;
+            color: #ccc;
+            margin-top: 5px;
+        }
+
+        /* Footer (duplicate from index.html, consider a shared CSS file or component) */
+        footer {
+            text-align: center;
+            padding: 40px 0;
+            margin-top: 50px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #fff;
+            font-size: 1rem;
+        }
+
+        footer p {
+            margin-bottom: 10px;
+        }
+
+        .social-links a {
+            color: #fff;
+            font-size: 1.5rem;
+            margin: 0 10px;
+            transition: color 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: #00c6ff;
+        }
+        /* End Footer */
+
+        /* Responsive adjustments */
+        @media screen and (max-width: 768px) {
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                background: rgba(255, 255, 255, 0.15);
+                position: absolute;
+                top: 70px;
+                left: 0;
+                padding: 20px 0;
+                border-radius: 0 0 10px 10px;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .nav-links li {
+                margin: 10px 0;
+                text-align: center;
+            }
+
+            .hamburger {
+                display: block;
+            }
+
+            .header h1 {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav id="navbar">
+        <div class="container">
+            <a href="index.html" class="logo">MyNews</a>
+            <ul class="nav-links">
+                <li><a href="index.html">Portfolio</a></li>
+                <li><a href="#" class="active">News</a></li>
+                <li><a href="profile.html">Contact</a></li>
+            </ul>
+            <div class="hamburger" id="hamburger-menu">&#9776;</div>
+        </div>
+    </nav>
+
+    <main>
+        <div class="container">
+            <header class="header">
+                <h1>Tech News: Berita Informatika Terkini</h1>
+                <p>Sumber terpercaya untuk berita teknologi, inovasi, dan analisis mendalam.</p>
+            </header>
+
+            <section class="news-section">
+                <div class="news-grid" id="news-grid">
+                    <div class="news-card">
+                        <img src="https://via.placeholder.com/600x400?text=News+Image" alt="News Image">
+                        <div class="news-content">
+                            <div class="news-meta">
+                                <span class="category">Technology</span>
+                                <span class="date">Loading...</span>
+                            </div>
+                            <h3>Loading News Title...</h3>
+                            <p>Loading news summary...</p>
+                            <a href="#" class="read-more">Read More &rarr;</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="trending-news">
+                <h2>Trending News</h2>
+                <ul class="trending-list" id="trending-news-list">
+                    <li>
+                        <a href="#">Loading Trending News...</a>
+                        <p>Loading trending summary...</p>
+                    </li>
+                </ul>
+            </section>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; <span id="current-year"></span> Tech News. All rights reserved.</p>
+            <div class="social-links">
+                <a href="#" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" target="_blank" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                <a href="#" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://kit.fontawesome.com/your-font-awesome-kit.js" crossorigin="anonymous"></script>
+    <script>
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+
+        const API_BASE_URL = 'http://localhost:3000/api'; // Sesuaikan dengan port backend Anda
+
+        async function fetchAndRenderNews() {
+            try {
+                const response = await fetch(`${API_BASE_URL}/news`);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const newsData = await response.json();
+                console.log('Fetched news data:', newsData);
+
+                const newsGrid = document.getElementById('news-grid');
+                const trendingNewsList = document.getElementById('trending-news-list');
+
+                newsGrid.innerHTML = ''; // Clear existing
+                trendingNewsList.innerHTML = ''; // Clear existing
+
+                newsData.forEach(news => {
+                    const newsCard = `
+                        <div class="news-card">
+                            <img src="${news.image_url || 'https://via.placeholder.com/600x400?text=News+Image'}" alt="${news.title}">
+                            <div class="news-content">
+                                <div class="news-meta">
+                                    <span class="category">${news.category}</span>
+                                    ${news.badge ? `<span class="badge">${news.badge}</span>` : ''}
+                                    <span class="date">${new Date(news.created_at).toLocaleDateString('id-ID')}</span>
+                                </div>
+                                <h3>${news.title}</h3>
+                                <p>${news.summary}</p>
+                                <a href="news-detail.html?id=${news.id}" class="read-more">Read More &rarr;</a>
+                            </div>
+                        </div>
+                    `;
+                    newsGrid.insertAdjacentHTML('beforeend', newsCard);
+
+                    if (news.trending) {
+                        const trendingItem = `
+                            <li>
+                                <a href="news-detail.html?id=${news.id}">${news.title}</a>
+                                <p>${news.summary}</p>
+                            </li>
+                        `;
+                        trendingNewsList.insertAdjacentHTML('beforeend', trendingItem);
+                    }
+                });
+
+                // Remove the old alert listener as links now navigate directly
+                document.querySelectorAll('.read-more, .trending-list a').forEach(link => {
+                    // Existing links now navigate directly, no need for alert
+                });
+
+            } catch (error) {
+                console.error('Failed to fetch news data:', error);
+                const newsGrid = document.getElementById('news-grid');
+                newsGrid.innerHTML = '<p style="text-align: center; color: red;">Gagal memuat berita. Mohon periksa koneksi atau server.</p>';
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            fetchAndRenderNews();
+
+            // Navbar scroll effect
+            const navbar = document.getElementById('navbar');
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 50) {
+                    navbar.classList.add('scrolled');
+                } else {
+                    navbar.classList.remove('scrolled');
+                }
+            });
+
+            // Hamburger menu toggle
+            const hamburgerMenu = document.getElementById('hamburger-menu');
+            const navLinks = document.querySelector('.nav-links');
+
+            hamburgerMenu.addEventListener('click', () => {
+                navLinks.classList.toggle('active');
+            });
+        });
+    </script>
+</body>
+</html>

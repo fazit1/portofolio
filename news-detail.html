@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="detail-title">Detail Berita - Memuat...</title>
+    <style>
+        /* Shared CSS from news.html and index.html */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #fff;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 15px 0;
+            transition: all 0.3s ease;
+        }
+
+        nav.scrolled {
+            background: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #fff;
+            text-decoration: none;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+        }
+
+        .nav-links li {
+            margin-left: 30px;
+        }
+
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1.1rem;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #a7d9ff;
+        }
+        .hamburger {
+            display: none; /* Hidden by default for larger screens */
+            cursor: pointer;
+            font-size: 2rem;
+            color: #fff;
+        }
+        /* End Navigation */
+
+        /* Article specific styling */
+        .article-container {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 100px; /* Adjust for fixed nav */
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .article-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            display: block; /* Ensures image takes full width */
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .article-container h1 {
+            font-size: 2.8rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            color: #fff;
+        }
+
+        .article-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 1rem;
+            color: #ccc;
+            margin-bottom: 30px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 15px;
+        }
+
+        .article-meta .category {
+            background: rgba(0, 114, 255, 0.7);
+            padding: 7px 12px;
+            border-radius: 8px;
+            font-weight: bold;
+            color: #fff;
+        }
+
+        .article-meta .badge {
+            background: linear-gradient(45deg, #ff6b6b, #ee4e4e);
+            padding: 7px 12px;
+            border-radius: 8px;
+            font-weight: bold;
+            color: #fff;
+            margin-left: 10px;
+        }
+
+        .article-content p {
+            font-size: 1.1rem;
+            margin-bottom: 1em;
+            color: #eee;
+        }
+
+        /* Loading state */
+        .loading {
+            text-align: center;
+            font-size: 1.5rem;
+            margin-top: 50px;
+        }
+
+        /* Error state */
+        .error {
+            text-align: center;
+            font-size: 1.5rem;
+            color: red;
+            margin-top: 50px;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 40px 0;
+            margin-top: 50px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #fff;
+            font-size: 1rem;
+        }
+
+        footer p {
+            margin-bottom: 10px;
+        }
+
+        .social-links a {
+            color: #fff;
+            font-size: 1.5rem;
+            margin: 0 10px;
+            transition: color 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: #00c6ff;
+        }
+
+        /* Responsive adjustments */
+        @media screen and (max-width: 768px) {
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                background: rgba(255, 255, 255, 0.15);
+                position: absolute;
+                top: 70px;
+                left: 0;
+                padding: 20px 0;
+                border-radius: 0 0 10px 10px;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .nav-links li {
+                margin: 10px 0;
+                text-align: center;
+            }
+
+            .hamburger {
+                display: block;
+            }
+
+            .article-container {
+                padding: 20px;
+                margin-top: 80px;
+            }
+            .article-container h1 {
+                font-size: 2rem;
+            }
+            .article-content p {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav id="navbar">
+        <div class="container">
+            <a href="index.html" class="logo">MyNews</a>
+            <ul class="nav-links">
+                <li><a href="index.html">Portfolio</a></li>
+                <li><a href="news.html" class="active">News</a></li>
+                <li><a href="profile.html">Contact</a></li>
+            </ul>
+            <div class="hamburger" id="hamburger-menu">&#9776;</div>
+        </div>
+    </nav>
+
+    <main>
+        <div class="container">
+            <section class="article-container" id="news-article-section">
+                <p class="loading" id="loading-message">Memuat artikel...</p>
+                </section>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; <span id="current-year"></span> Tech News. All rights reserved.</p>
+            <div class="social-links">
+                <a href="#" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" target="_blank" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                <a href="#" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://kit.fontawesome.com/your-font-awesome-kit.js" crossorigin="anonymous"></script>
+    <script>
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+
+        const API_BASE_URL = 'http://localhost:3000/api'; // Adjust to your backend port
+
+        async function fetchAndRenderNewsArticle() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const newsId = urlParams.get('id');
+            const articleSection = document.getElementById('news-article-section');
+            const loadingMessage = document.getElementById('loading-message');
+            const detailTitle = document.getElementById('detail-title');
+
+            if (!newsId) {
+                articleSection.innerHTML = '<p class="error">ID berita tidak ditemukan.</p>';
+                loadingMessage.style.display = 'none';
+                detailTitle.textContent = 'Berita Tidak Ditemukan';
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_BASE_URL}/news/${newsId}`);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const news = await response.json();
+
+                loadingMessage.style.display = 'none'; // Hide loading message
+
+                if (news) {
+                    detailTitle.textContent = news.title + ' - Tech News';
+                    articleSection.innerHTML = `
+                        ${news.image_url ? `<img src="${news.image_url}" alt="${news.title}">` : ''}
+                        <h1>${news.title}</h1>
+                        <div class="article-meta">
+                            <div>
+                                <span class="category">${news.category}</span>
+                                ${news.badge ? `<span class="badge">${news.badge}</span>` : ''}
+                            </div>
+                            <span class="date">${new Date(news.created_at).toLocaleDateString('id-ID')}</span>
+                        </div>
+                        <div class="article-content">
+                            <p>${news.content.replace(/\n/g, '<br>')}</p>
+                        </div>
+                    `;
+                } else {
+                    articleSection.innerHTML = '<p class="error">Artikel berita tidak ditemukan.</p>';
+                }
+
+            } catch (error) {
+                console.error('Failed to fetch news article:', error);
+                loadingMessage.style.display = 'none';
+                articleSection.innerHTML = '<p class="error">Gagal memuat artikel berita. Mohon periksa koneksi atau server.</p>';
+                detailTitle.textContent = 'Error Memuat Berita';
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            fetchAndRenderNewsArticle();
+
+            // Navbar scroll effect
+            const navbar = document.getElementById('navbar');
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 50) {
+                    navbar.classList.add('scrolled');
+                } else {
+                    navbar.classList.remove('scrolled');
+                }
+            });
+
+            // Hamburger menu toggle
+            const hamburgerMenu = document.getElementById('hamburger-menu');
+            const navLinks = document.querySelector('.nav-links');
+
+            hamburgerMenu.addEventListener('click', () => {
+                navLinks.classList.toggle('active');
+            });
+        });
+    </script>
+</body>
+</html>
